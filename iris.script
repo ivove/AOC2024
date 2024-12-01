@@ -1,0 +1,7 @@
+zn "%SYS"
+Do ##class(Security.Users).UnExpireUserPasswords("*")
+
+zn "USER"
+D $system.OBJ.ImportDir("/irisdev/app/",,"c",.errorlog, 1)
+zpm "load /opt/irisapp/ -v":1:1
+halt
