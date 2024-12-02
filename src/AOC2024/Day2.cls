@@ -33,18 +33,18 @@ Class AOC2024.Day2 Extends AOC2024.Base
     Method Part2() as %Numeric
     {
         set cnt = 0
-        While ('..TestFile.AtEnd){
-            Set line = $TRANSLATE(..TestFile.ReadLine(),$CHAR(13),"")
+        While ('..File.AtEnd){
+            Set line = $TRANSLATE($TRANSLATE(..File.ReadLine(),$CHAR(13),"")," ","*")
             //write line,!
-            set len = $LENGTH(line," ")
+            set len = $LENGTH(line,"*")
             set i = 2
             set safe = 1
             set dir = 1
             set p = 1
-            if ($PIECE(line," ") < $PIECE(line," ",2)) { set dir = -1 }
+            if ($PIECE(line,"*") < $PIECE(line,"*",2)) { set dir = -1 }
             while ((i <= len) && safe) {
-                set a = $PIECE(line," ",i-1)
-                set b = $PIECE(line," ",i)
+                set a = $PIECE(line,"*",i-1)
+                set b = $PIECE(line,"*",i)
                 set diff = a - b
 
                 if ((diff * dir) < 0 ) { set safe = 0 }
@@ -57,18 +57,21 @@ Class AOC2024.Day2 Extends AOC2024.Base
             }
             //write *9,*9,safe,!
             set xlen = len - 1
+            set p = 1
             while ((safe = 0) && (p <= len))
             {
                 set safe = 1
-                set $PIECE(line," ",p)=""
+                set nline = line
+                set $PIECE(nline,"*",p) = ""
+                if (p = 1) { set nline = $EXTRACT(nline,2,*) }
+                set nline = $REPLACE(nline,"**","*")
                 set i = 2
                 set safe = 1
                 set dir = 1
-                set p = 1   
-                if ($PIECE(line," ") < $PIECE(line," ",2)) { set dir = -1 }
+                if ($PIECE(nline,"*") < $PIECE(nline,"*",2)) { set dir = -1 }
                 while ((i <= xlen) && safe) {
-                    set a = $PIECE(line," ",i-1)
-                    set b = $PIECE(line," ",i)
+                    set a = $PIECE(nline,"*",i-1)
+                    set b = $PIECE(nline,"*",i)
                     set diff = a - b
 
                     if ((diff * dir) < 0 ) { set safe = 0 }
