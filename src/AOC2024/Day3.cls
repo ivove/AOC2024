@@ -44,7 +44,6 @@ Class AOC2024.Day3 Extends AOC2024.Base
                         if (part ?1.3N1","1.3N){
                             set part = "mul("_part_")"
                             //write *9,part,!
-                            set i = $FIND(line,part)
                             set rep = $get(rep)+1
                             set rep(rep)=part
                         }                        
