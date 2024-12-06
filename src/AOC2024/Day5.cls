@@ -80,16 +80,7 @@ Class AOC2024.Day5 Extends AOC2024.Base
                     set rule = rules(r)
                     if '..TestRule(book,rule) { 
                         zw rule
-                        set x = $LIST(rule,1)
-                        set y = $LIST(rule,2)
-                        set old = $GET(temp(x))
-                        set temp(x) = y
-                        if (old '= "") { set temp(y) = old }
-                        else { 
-                            
-                        }
-                        
-                        if (temp = y) { set temp = x }
+                        do ..ApplyRule(.temp,rule)
                         zw temp
                     }
                 }
@@ -134,9 +125,17 @@ Class AOC2024.Day5 Extends AOC2024.Base
         set list(x) = y
         if (old '= "") { set list(y) = old }
         else { 
-        
+            kill list(y)
+            set go = 1
+            set z = $ORDER(list(""))
+            while (z'="") && go {
+                if ((list(z) = y) && (z '= x)) {
+                    set list(z) = x
+                }
+                set z = $ORDER(list(z))
+            }
         }
-                        
+        
         if (list = y) { set list = x }
     }
 }
